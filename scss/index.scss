@@ -1,0 +1,15 @@
+$item:80px;
+
+.chess-board {
+    margin:60px auto;
+    border: 2px solid #ccc;
+    padding: 8px;
+    width:8*$item;
+    height:9*$item;
+    position:relative;
+    .gezi{
+        width:$item;
+        height:$item;
+        border:1px solid #ccc;
+    }
+}

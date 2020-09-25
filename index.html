@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Chess Game</title>
+    <link rel="stylesheet" href="./css/index.min.css">
+</head>
+
+<body>
+    <div class="chess-board"></div>
+    <script type="module">
+        import { Chess } from './js/index.js'
+        const board = document.getElementsByClassName( 'chess-board' )[ 0 ];
+
+        new Chess( board );
+    </script>
+</body>
+
+</html>
