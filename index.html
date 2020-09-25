@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国象棋</title>
+    <link rel="stylesheet" href="./css/index.min.css">
+</head>
+
+<body>
+    <div class="box">
+
+    </div>
+
+    <script type="module">
+        import { ChessBoard } from './js/canvas.js'
+
+        const box = document.getElementsByClassName('box')[0];
+        const chessArr = new ChessBoard(box);
+
+        for (const o of chessArr.arrs) {
+            const chessEle = document.createElement('div');
+            chessEle.className = 'chess-ele';
+            const p = 8;
+            const { width, height, fang, name, x, y, isDeath } = o;
+            chessEle.style.width = width + 'px';
+            chessEle.style.height = height + 'px';
+            chessEle.style.left = x + p + 'px';
+            chessEle.style.top = y + p + 'px';
+            chessEle.textContent = name;
+            chessEle.style.background = fang ? '#f00' : '#55f';
+            box.appendChild(chessEle);
+        }
+
+        
+
+    </script>
+</body>
+
+</html>
