@@ -9,7 +9,7 @@ import {
 } from './Chess.js'
 class ChessBoard {
 
-    constructor(parent, color = '#333') {
+    constructor (parent, color = '#333') {
         const cvs = document.createElement('canvas');
         const {
             width,
@@ -21,6 +21,7 @@ class ChessBoard {
         [cvs.width, cvs.height] = [boardW, boardH];
 
         parent.appendChild(cvs);
+        this.parent = parent;
 
         const ctx = cvs.getContext('2d');
         ctx.strokeStyle = color;
@@ -30,27 +31,56 @@ class ChessBoard {
         this.init();
 
         this.arrs = [];
-        const dira = [['l','r'],['l','r']];
+        const dira = ['l', 'r'];
 
-        for(let i = 0;i < dira.length;i++){
-            for(let o of dira[i]){
-                this.arrs.push(new Ma(i,this.size,o));
-                this.arrs.push(new Pao(i,this.size,o));
-                this.arrs.push(new Che(i,this.size,o));
-                this.arrs.push(new Xiang(i,this.size,o));
-                this.arrs.push(new Shi(i,this.size,o));
-                this.arrs.push(new Jiang(i,this.size,o));
+        for (let i = 0; i < 2; i++) {
+            for (let o of dira) {
+                this.arrs.push(new Ma(i, this.size, o));
+                this.arrs.push(new Pao(i, this.size, o));
+                this.arrs.push(new Che(i, this.size, o));
+                this.arrs.push(new Xiang(i, this.size, o));
+                this.arrs.push(new Shi(i, this.size, o));
+                this.arrs.push(new Jiang(i, this.size, o));
             }
         }
 
-        for(let i = 0;i <= 8;i+=2){
-            this.arrs.push(new Bing(0,this.size,i));
-            this.arrs.push(new Bing(1,this.size,i));
+        for (let i = 0; i <= 8; i += 2) {
+            this.arrs.push(new Bing(0, this.size, i));
+            this.arrs.push(new Bing(1, this.size, i));
         }
 
     }
 
-    init() {
+    start(){
+        for (const o of this.arrs) {
+            const chessEle = document.createElement('div');
+            chessEle.className = 'chess-ele';
+            // chessEle.draggable = true;
+            const p = 8;
+            const { width, height, fang, name, x, y } = o;
+            chessEle.style.width = width + 'px';
+            chessEle.style.height = height + 'px';
+            chessEle.style.left = x + p + 'px';
+            chessEle.style.top = y + p + 'px';
+            chessEle.textContent = name;
+            chessEle.style.background = fang ? '#f00' : '#55f';
+            chessEle.onclick = this.select;
+            this.parent.appendChild(chessEle);
+        }
+    }
+
+    reset(){
+        const childs = this.parent.children;
+        for(let i = childs.length-1;i > 0;i--) this.parent.removeChild(childs[i]);
+    }
+
+    select(e){
+        console.log(e);
+        e.target.classList.add('active');
+        console.log(e.target.className);
+    }
+
+    init () {
         for (let i = 1; i < 8; i++) {
             this.column(0, 4, i);
             this.column(5, 9, i);
@@ -81,21 +111,21 @@ class ChessBoard {
         }
     }
 
-    column(start, end, i) {
+    column (start, end, i) {
         this.ctx.beginPath();
         this.ctx.moveTo(i * this.size, start * this.size);
         this.ctx.lineTo(i * this.size, end * this.size);
         this.ctx.stroke();
     }
 
-    rows(start, end, i) {
+    rows (start, end, i) {
         this.ctx.beginPath();
         this.ctx.moveTo(start * this.size, i * this.size);
         this.ctx.lineTo(end * this.size, i * this.size);
         this.ctx.stroke();
     }
 
-    chaLine(x, y) {
+    chaLine (x, y) {
         this.ctx.beginPath();
         this.ctx.moveTo(x * this.size, y * this.size);
         this.ctx.lineTo((x + 2) * this.size, (y + 2) * this.size);
@@ -104,7 +134,7 @@ class ChessBoard {
         this.ctx.stroke();
     }
 
-    jiaoyin(x, y) {
+    jiaoyin (x, y) {
         const [s, b] = [.1, .3];
         this.ctx.beginPath();
         this.ctx.moveTo((x - s) * this.size, (y - b) * this.size);

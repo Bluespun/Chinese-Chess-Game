@@ -59,7 +59,8 @@ class Che extends Chess {
 class Xiang extends Chess {
     constructor(fang, size, diraction) {
         super();
-        this.name = '象';
+        const arr = ['象','相'];
+        this.name = arr[fang];
         this.isDeath = false;
         this.fang = fang;
         const zb = [{ l: [2, 0], r: [6, 0] }, { l: [2, 9], r: [6, 9] }];
@@ -76,7 +77,8 @@ class Xiang extends Chess {
 class Shi extends Chess {
     constructor(fang, size, diraction) {
         super();
-        this.name = '士';
+        const arr = ['士','仕'];
+        this.name = arr[fang];
         this.isDeath = false;
         this.fang = fang;
         const zb = [{ l: [3, 0], r: [5, 0] }, { l: [3, 9], r: [5, 9] }];
