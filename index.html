@@ -27,6 +27,9 @@
 
         const chess = new ChessBoard(box);
 
+        box.onclick = chess.coordinate;
+        // box.addEventListener('click',chess.coordinate,true)
+
         let isStart = false;
 
         function startGame(){

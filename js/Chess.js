@@ -1,12 +1,35 @@
 class Chess {
     constructor() {
-        this.width = 50;
-        this.height = 50;
-        this.radius = '50%';
+        const size = 50;
+        this.width = size;
+        this.height = size;
+    }
+    rander(parent,fang){
+        const colors = ['#55f','#f00'];
+        this.chessEle = document.createElement('div');
+        this.chessEle.className = 'chess-ele';
+        const p = 8;
+        this.chessEle.style.width = this.width + 'px';
+        this.chessEle.style.height = this.height + 'px';
+        this.chessEle.style.left = this.x + p + 'px';
+        this.chessEle.style.top = this.y + p + 'px';
+        this.chessEle.textContent = this.name;
+        this.chessEle.style.background = colors[fang];
+        this.chessEle.setAttribute('data-name',this.chessName);
+        this.chessEle.onclick = this.select;
+        parent.appendChild(this.chessEle);
+    }
+
+    select(e){
+        e.stopPropagation();
+        const activeClass = document.getElementsByClassName('active')[0];
+        if(activeClass) activeClass.classList.remove('active');
+        e.target.classList.add('active');
+
     }
 }
 class Ma extends Chess {
-    constructor(fang, size, diraction) {
+    constructor(parent,fang, size, diraction) {
         super();
         this.name = '马';
         this.isDeath = false;
@@ -14,16 +37,22 @@ class Ma extends Chess {
         const zb = [{ l: [1, 0], r: [7, 0] }, { l: [1, 9], r: [7, 9] }];
         this.x = zb[fang][diraction][0] * size;
         this.y = zb[fang][diraction][1] * size;
+        this.chessName = this.name + fang + '-' + diraction;
+        super.rander(parent,fang);
     }
     move(x, y) {
         if (Math.abs(x - this.x) > 2 || Math.abs(y - this.y) > 2 || x - this.x === y - this.y)
             console.log('规则不正确');
-        else
+        else{
             [this.x, this.y] = [x, y];
+            // this.chessEle.style.left = this.x + p + 'px';
+            // this.chessEle.style.top = this.y + p + 'px';
+        }
+            
     }
 }
 class Pao extends Chess {
-    constructor(fang, size, diraction) {
+    constructor(parent,fang, size, diraction) {
         super();
         this.name = '炮';
         this.isDeath = false;
@@ -31,6 +60,8 @@ class Pao extends Chess {
         const zb = [{ l: [1, 2], r: [7, 2] }, { l: [1, 7], r: [7, 7] }];
         this.x = zb[fang][diraction][0] * size;
         this.y = zb[fang][diraction][1] * size;
+        this.chessName = this.name + fang + '-' + diraction;
+        super.rander(parent,fang);
     }
     move(x, y) {
         if (this.x !== x && this.y !== y)
@@ -40,7 +71,7 @@ class Pao extends Chess {
     }
 }
 class Che extends Chess {
-    constructor(fang, size, diraction) {
+    constructor(parent,fang, size, diraction) {
         super();
         this.name = '车';
         this.isDeath = false;
@@ -48,6 +79,8 @@ class Che extends Chess {
         const zb = [{ l: [0, 0], r: [8, 0] }, { l: [0, 9], r: [8, 9] }];
         this.x = zb[fang][diraction][0] * size;
         this.y = zb[fang][diraction][1] * size;
+        this.chessName = this.name + fang + '-' + diraction;
+        super.rander(parent,fang);
     }
     move(x, y) {
         if (this.x !== x && this.y !== y)
@@ -57,7 +90,7 @@ class Che extends Chess {
     }
 }
 class Xiang extends Chess {
-    constructor(fang, size, diraction) {
+    constructor(parent,fang, size, diraction) {
         super();
         const arr = ['象','相'];
         this.name = arr[fang];
@@ -66,6 +99,8 @@ class Xiang extends Chess {
         const zb = [{ l: [2, 0], r: [6, 0] }, { l: [2, 9], r: [6, 9] }];
         this.x = zb[fang][diraction][0] * size;
         this.y = zb[fang][diraction][1] * size;
+        this.chessName = this.name + fang + '-' + diraction;
+        super.rander(parent,fang);
     }
     move(x, y) {
         if (Math.abs(x - this.x) !== 2 || Math.abs(y - this.y) !== 2)
@@ -75,7 +110,7 @@ class Xiang extends Chess {
     }
 }
 class Shi extends Chess {
-    constructor(fang, size, diraction) {
+    constructor(parent,fang, size, diraction) {
         super();
         const arr = ['士','仕'];
         this.name = arr[fang];
@@ -84,6 +119,8 @@ class Shi extends Chess {
         const zb = [{ l: [3, 0], r: [5, 0] }, { l: [3, 9], r: [5, 9] }];
         this.x = zb[fang][diraction][0] * size;
         this.y = zb[fang][diraction][1] * size;
+        this.chessName = this.name + fang + '-' + diraction;
+        super.rander(parent,fang);
     }
     move(x, y) {
         const { abs } = Math;
@@ -95,7 +132,7 @@ class Shi extends Chess {
     }
 }
 class Jiang extends Chess {
-    constructor(fang, size) {
+    constructor(parent,fang, size) {
         super();
         this.isDeath = false;
         const arr = ['将', '帅'];
@@ -104,6 +141,7 @@ class Jiang extends Chess {
         const zb = [[4, 0], [4, 9]];
         this.x = zb[fang][0] * size;
         this.y = zb[fang][1] * size;
+        super.rander(parent,fang);
     }
     move(x, y) {
         if (this.x !== x && this.y !== y || Math.abs(this.x - x) !== 1 || Math.abs(this.y - y) !== 1)
@@ -113,7 +151,7 @@ class Jiang extends Chess {
     }
 }
 class Bing extends Chess {
-    constructor(fang, size, x) {
+    constructor(parent,fang, size, x) {
         super();
         this.isDeath = false;
         this.fang = fang;
@@ -122,6 +160,8 @@ class Bing extends Chess {
         const zb = [3, 6];
         this.x = x * size;
         this.y = zb[fang] * size;
+        this.chessName = this.name + fang + '-' + (x / 2 + 1);
+        super.rander(parent,fang);
     }
     move(x, y) {
         if (Math.abs(this.x - x) !== 1)

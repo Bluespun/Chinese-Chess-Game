@@ -21,6 +21,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var self;
+
 var ChessBoard =
 /*#__PURE__*/
 function () {
@@ -43,53 +45,83 @@ function () {
     cvs.width = _ref2[0];
     cvs.height = _ref2[1];
     parent.appendChild(cvs);
+    this.parent = parent;
     var ctx = cvs.getContext('2d');
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
     ctx.strokeRect(0, 0, boardW, boardH);
     this.ctx = ctx;
+    self = this;
     this.init();
-    this.arrs = [];
-    var dira = [['l', 'r'], ['l', 'r']];
-
-    for (var i = 0; i < dira.length; i++) {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = dira[i][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var o = _step.value;
-          this.arrs.push(new _Chess.Ma(i, this.size, o));
-          this.arrs.push(new _Chess.Pao(i, this.size, o));
-          this.arrs.push(new _Chess.Che(i, this.size, o));
-          this.arrs.push(new _Chess.Xiang(i, this.size, o));
-          this.arrs.push(new _Chess.Shi(i, this.size, o));
-          this.arrs.push(new _Chess.Jiang(i, this.size, o));
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-    }
-
-    for (var _i = 0; _i <= 8; _i += 2) {
-      this.arrs.push(new _Chess.Bing(0, this.size, _i));
-      this.arrs.push(new _Chess.Bing(1, this.size, _i));
-    }
   }
 
   _createClass(ChessBoard, [{
+    key: "start",
+    value: function start() {
+      var dira = ['l', 'r'];
+      var ma;
+      self.chessObj = {};
+
+      for (var i = 0; i < 2; i++) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = dira[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var o = _step.value;
+            ma = new _Chess.Ma(this.parent, i, this.size, o);
+            self.chessObj[i + o] = ma;
+            new _Chess.Pao(this.parent, i, this.size, o);
+            new _Chess.Che(this.parent, i, this.size, o);
+            new _Chess.Xiang(this.parent, i, this.size, o);
+            new _Chess.Shi(this.parent, i, this.size, o);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        new _Chess.Jiang(this.parent, i, this.size);
+
+        for (var j = 0; j <= 8; j += 2) {
+          new _Chess.Bing(this.parent, i, this.size, j);
+        }
+      }
+
+      console.log(ma);
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      var childs = this.parent.children;
+
+      for (var i = childs.length - 1; i > 0; i--) {
+        this.parent.removeChild(childs[i]);
+      }
+    }
+  }, {
+    key: "coordinate",
+    value: function coordinate(_ref3) {
+      var x = _ref3.offsetX,
+          y = _ref3.offsetY;
+      var activeClass = document.getElementsByClassName('active')[0];
+
+      if (activeClass) {}
+
+      console.log(x, y, self.chessObj);
+    }
+  }, {
     key: "init",
     value: function init() {
       for (var i = 1; i < 8; i++) {
@@ -97,8 +129,8 @@ function () {
         this.column(5, 9, i);
       }
 
-      for (var _i2 = 1; _i2 < 9; _i2++) {
-        this.rows(0, 8, _i2);
+      for (var _i = 1; _i < 9; _i++) {
+        this.rows(0, 8, _i);
       }
 
       this.chaLine(3, 0);
@@ -108,13 +140,13 @@ function () {
       this.ctx.fillText('汉界', this.size * 6.1, this.size * 4.65);
       var jiaoArr = [[1, 2], [7, 2], [1, 7], [7, 7]];
 
-      for (var _i3 = 0; _i3 < jiaoArr.length; _i3++) {
-        this.jiaoyin.apply(this, _toConsumableArray(jiaoArr[_i3]));
+      for (var _i2 = 0; _i2 < jiaoArr.length; _i2++) {
+        this.jiaoyin.apply(this, _toConsumableArray(jiaoArr[_i2]));
       }
 
-      for (var _i4 = 0; _i4 <= 8; _i4 += 2) {
-        this.jiaoyin(_i4, 3);
-        this.jiaoyin(_i4, 6);
+      for (var _i3 = 0; _i3 <= 8; _i3 += 2) {
+        this.jiaoyin(_i3, 3);
+        this.jiaoyin(_i3, 6);
       }
     }
   }, {
@@ -175,3 +207,8 @@ function () {
 }();
 
 exports.ChessBoard = ChessBoard;
+
+function removeClass(className) {
+  var activeClass = document.getElementsByClassName(className)[0];
+  if (activeClass) activeClass.classList.remove(className);
+}

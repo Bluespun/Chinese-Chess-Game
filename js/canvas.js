@@ -7,6 +7,8 @@ import {
     Jiang,
     Xiang
 } from './Chess.js'
+
+let self;
 class ChessBoard {
 
     constructor (parent, color = '#333') {
@@ -22,51 +24,35 @@ class ChessBoard {
 
         parent.appendChild(cvs);
         this.parent = parent;
-
+        
         const ctx = cvs.getContext('2d');
         ctx.strokeStyle = color;
         ctx.fillStyle = color;
         ctx.strokeRect(0, 0, boardW, boardH);
         this.ctx = ctx;
+        self = this;
         this.init();
-
-        this.arrs = [];
-        const dira = ['l', 'r'];
-
-        for (let i = 0; i < 2; i++) {
-            for (let o of dira) {
-                this.arrs.push(new Ma(i, this.size, o));
-                this.arrs.push(new Pao(i, this.size, o));
-                this.arrs.push(new Che(i, this.size, o));
-                this.arrs.push(new Xiang(i, this.size, o));
-                this.arrs.push(new Shi(i, this.size, o));
-                this.arrs.push(new Jiang(i, this.size, o));
-            }
-        }
-
-        for (let i = 0; i <= 8; i += 2) {
-            this.arrs.push(new Bing(0, this.size, i));
-            this.arrs.push(new Bing(1, this.size, i));
-        }
-
     }
 
     start(){
-        for (const o of this.arrs) {
-            const chessEle = document.createElement('div');
-            chessEle.className = 'chess-ele';
-            // chessEle.draggable = true;
-            const p = 8;
-            const { width, height, fang, name, x, y } = o;
-            chessEle.style.width = width + 'px';
-            chessEle.style.height = height + 'px';
-            chessEle.style.left = x + p + 'px';
-            chessEle.style.top = y + p + 'px';
-            chessEle.textContent = name;
-            chessEle.style.background = fang ? '#f00' : '#55f';
-            chessEle.onclick = this.select;
-            this.parent.appendChild(chessEle);
+        const dira = ['l', 'r'];
+        let ma;
+        self.chessObj = {}
+        for (let i = 0; i < 2; i++) {
+            for (let o of dira) {
+                ma = new Ma(this.parent,i, this.size, o);
+                self.chessObj[i+o] = ma;
+                new Pao(this.parent,i, this.size, o);
+                new Che(this.parent,i, this.size, o);
+                new Xiang(this.parent,i, this.size, o);
+                new Shi(this.parent,i, this.size, o);
+            }
+            new Jiang(this.parent,i, this.size);
+            for (let j = 0; j <= 8; j += 2) {
+                new Bing(this.parent,i, this.size, j);
+            }
         }
+        console.log(ma);
     }
 
     reset(){
@@ -74,10 +60,12 @@ class ChessBoard {
         for(let i = childs.length-1;i > 0;i--) this.parent.removeChild(childs[i]);
     }
 
-    select(e){
-        console.log(e);
-        e.target.classList.add('active');
-        console.log(e.target.className);
+    coordinate({offsetX:x,offsetY:y}){
+        const activeClass = document.getElementsByClassName('active')[0];
+        if(activeClass){
+
+        }
+        console.log(x,y,self.chessObj);
     }
 
     init () {
@@ -160,6 +148,11 @@ class ChessBoard {
         this.ctx.lineTo((x + b) * this.size, (y + s) * this.size);
         this.ctx.stroke();
     }
+}
+
+function removeClass(className){
+    const activeClass = document.getElementsByClassName(className)[0];
+    if(activeClass) activeClass.classList.remove(className);
 }
 
 export {
