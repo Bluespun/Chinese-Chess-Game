@@ -36,36 +36,49 @@ class ChessBoard {
 
     start(){
         const dira = ['l', 'r'];
-        let ma;
         self.chessObj = {}
         for (let i = 0; i < 2; i++) {
             for (let o of dira) {
-                ma = new Ma(this.parent,i, this.size, o);
-                self.chessObj[i+o] = ma;
-                new Pao(this.parent,i, this.size, o);
-                new Che(this.parent,i, this.size, o);
-                new Xiang(this.parent,i, this.size, o);
-                new Shi(this.parent,i, this.size, o);
+                const ma = new Ma(this.parent,i, this.size, o);
+                const pao = new Pao(this.parent,i, this.size, o);
+                const che = new Che(this.parent,i, this.size, o);
+                const xiang = new Xiang(this.parent,i, this.size, o);
+                const shi = new Shi(this.parent,i, this.size, o);
+                self.chessObj[ma.chessName] = ma;
+                self.chessObj[pao.chessName] = pao;
+                self.chessObj[che.chessName] = che;
+                self.chessObj[xiang.chessName] = xiang;
+                self.chessObj[shi.chessName] = shi;
             }
-            new Jiang(this.parent,i, this.size);
+            const jiang = new Jiang(this.parent,i, this.size);
+            self.chessObj[jiang.chessName] = jiang;
             for (let j = 0; j <= 8; j += 2) {
-                new Bing(this.parent,i, this.size, j);
+                const bing = new Bing(this.parent,i, this.size, j);
+                self.chessObj[bing.chessName] = bing;
             }
         }
-        console.log(ma);
     }
 
     reset(){
         const childs = this.parent.children;
         for(let i = childs.length-1;i > 0;i--) this.parent.removeChild(childs[i]);
+        this.start();
     }
 
     coordinate({offsetX:x,offsetY:y}){
+        self.zuobiao(x,y);
+    }
+
+    zuobiao(x,y){
         const activeClass = document.getElementsByClassName('active')[0];
         if(activeClass){
-
+            const dataName = activeClass.getAttribute('data-name');
+            const yuX = x % this.size;
+            const yuY = y % this.size;
+            x = yuX <= this.size / 2 ? x - yuX : x - yuX + this.size;
+            y = yuY <= this.size / 2 ? y - yuY : y - yuY + this.size;
+            this.chessObj[dataName].move(x,y);
         }
-        console.log(x,y,self.chessObj);
     }
 
     init () {
@@ -150,10 +163,6 @@ class ChessBoard {
     }
 }
 
-function removeClass(className){
-    const activeClass = document.getElementsByClassName(className)[0];
-    if(activeClass) activeClass.classList.remove(className);
-}
 
 export {
     ChessBoard

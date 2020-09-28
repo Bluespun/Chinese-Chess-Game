@@ -1,8 +1,9 @@
 class Chess {
-    constructor() {
-        const size = 50;
-        this.width = size;
-        this.height = size;
+    constructor(size) {
+        const lunc = 50;
+        this.width = lunc;
+        this.height = lunc;
+        this.size = size;
     }
     rander(parent,fang){
         const colors = ['#55f','#f00'];
@@ -23,14 +24,19 @@ class Chess {
     select(e){
         e.stopPropagation();
         const activeClass = document.getElementsByClassName('active')[0];
-        if(activeClass) activeClass.classList.remove('active');
-        e.target.classList.add('active');
+        if(!e.target.classList.contains('active')){
+            if(activeClass) activeClass.classList.remove('active');
+            e.target.classList.add('active');
+        }
+    }
 
+    computeXY = num => {
+        return this.size * num;
     }
 }
 class Ma extends Chess {
     constructor(parent,fang, size, diraction) {
-        super();
+        super(size);
         this.name = '马';
         this.isDeath = false;
         this.fang = fang;
@@ -41,19 +47,21 @@ class Ma extends Chess {
         super.rander(parent,fang);
     }
     move(x, y) {
-        if (Math.abs(x - this.x) > 2 || Math.abs(y - this.y) > 2 || x - this.x === y - this.y)
+        const { abs } = Math;
+        if (abs(x - this.x) > this.computeXY(2) || abs(y - this.y) > this.computeXY(2) || abs(x - this.x) === abs(y - this.y) || x === this.x || y === this.y)
             console.log('规则不正确');
         else{
             [this.x, this.y] = [x, y];
-            // this.chessEle.style.left = this.x + p + 'px';
-            // this.chessEle.style.top = this.y + p + 'px';
+            this.chessEle.style.left = this.x + 8 + 'px';
+            this.chessEle.style.top = this.y + 8 + 'px';
+            this.chessEle.classList.remove('active');
         }
             
     }
 }
 class Pao extends Chess {
     constructor(parent,fang, size, diraction) {
-        super();
+        super(size);
         this.name = '炮';
         this.isDeath = false;
         this.fang = fang;
@@ -66,13 +74,17 @@ class Pao extends Chess {
     move(x, y) {
         if (this.x !== x && this.y !== y)
             console.log('规则不正确');
-        else
+        else{
             [this.x, this.y] = [x, y];
+            this.chessEle.style.left = this.x + 8 + 'px';
+            this.chessEle.style.top = this.y + 8 + 'px';
+            this.chessEle.classList.remove('active');
+        }
     }
 }
 class Che extends Chess {
     constructor(parent,fang, size, diraction) {
-        super();
+        super(size);
         this.name = '车';
         this.isDeath = false;
         this.fang = fang;
@@ -85,13 +97,17 @@ class Che extends Chess {
     move(x, y) {
         if (this.x !== x && this.y !== y)
             console.log('规则不正确');
-        else
+        else{
             [this.x, this.y] = [x, y];
+            this.chessEle.style.left = this.x + 8 + 'px';
+            this.chessEle.style.top = this.y + 8 + 'px';
+            this.chessEle.classList.remove('active');
+        }
     }
 }
 class Xiang extends Chess {
     constructor(parent,fang, size, diraction) {
-        super();
+        super(size);
         const arr = ['象','相'];
         this.name = arr[fang];
         this.isDeath = false;
@@ -100,18 +116,24 @@ class Xiang extends Chess {
         this.x = zb[fang][diraction][0] * size;
         this.y = zb[fang][diraction][1] * size;
         this.chessName = this.name + fang + '-' + diraction;
+        // this.size = size;
         super.rander(parent,fang);
     }
     move(x, y) {
-        if (Math.abs(x - this.x) !== 2 || Math.abs(y - this.y) !== 2)
+        if (Math.abs(x - this.x) !== this.computeXY(2) || Math.abs(y - this.y) !== this.computeXY(2))
             console.log('规则不正确');
-        else
+        else{
             [this.x, this.y] = [x, y];
+            this.chessEle.style.left = this.x + 8 + 'px';
+            this.chessEle.style.top = this.y + 8 + 'px';
+            this.chessEle.classList.remove('active');
+        }
+        console.log(x - this.x,y - this.y);
     }
 }
 class Shi extends Chess {
     constructor(parent,fang, size, diraction) {
-        super();
+        super(size);
         const arr = ['士','仕'];
         this.name = arr[fang];
         this.isDeath = false;
@@ -125,15 +147,20 @@ class Shi extends Chess {
     move(x, y) {
         const { abs } = Math;
         const [disX, disY] = [abs(x - this.x), abs(y - this.y)];
-        if (disX !== 1 || disY !== 1 || x < 3 || x > 5 || y > 2 && y < 7)
+        const { computeXY:c } = this;
+        if (disX !== c(1) || disY !== c(1) || x < c(3) || x > c(5) || y > c(2) && y < c(7))
             console.log('规则不正确');
-        else
+        else{
             [this.x, this.y] = [x, y];
+            this.chessEle.style.left = this.x + 8 + 'px';
+            this.chessEle.style.top = this.y + 8 + 'px';
+            this.chessEle.classList.remove('active');
+        }
     }
 }
 class Jiang extends Chess {
     constructor(parent,fang, size) {
-        super();
+        super(size);
         this.isDeath = false;
         const arr = ['将', '帅'];
         this.fang = fang;
@@ -141,18 +168,25 @@ class Jiang extends Chess {
         const zb = [[4, 0], [4, 9]];
         this.x = zb[fang][0] * size;
         this.y = zb[fang][1] * size;
+        this.chessName = this.name + fang;
         super.rander(parent,fang);
     }
     move(x, y) {
-        if (this.x !== x && this.y !== y || Math.abs(this.x - x) !== 1 || Math.abs(this.y - y) !== 1)
+        const { computeXY:c } = this;
+        if (this.x !== x && this.y !== y || Math.abs(this.x - x) !== c(1) || Math.abs(this.y - y) !== c(1))
             console.log('规则不正确');
-        else
+        else{
             [this.x, this.y] = [x, y];
+            this.chessEle.style.left = this.x + 8 + 'px';
+            this.chessEle.style.top = this.y + 8 + 'px';
+            this.chessEle.classList.remove('active');
+        }
+        console.log(this.x - x,c(1));
     }
 }
 class Bing extends Chess {
     constructor(parent,fang, size, x) {
-        super();
+        super(size);
         this.isDeath = false;
         this.fang = fang;
         const arr = ['卒', '兵'];
@@ -166,8 +200,12 @@ class Bing extends Chess {
     move(x, y) {
         if (Math.abs(this.x - x) !== 1)
             console.log('姿势不正确!!!');
-        else
-            this.x = x;
+        else{
+            [this.x, this.y] = [x, y];
+            this.chessEle.style.left = this.x + 8 + 'px';
+            this.chessEle.style.top = this.y + 8 + 'px';
+            this.chessEle.classList.remove('active');
+        }
     }
 }
 export { Ma, Pao, Bing, Che, Shi, Jiang, Xiang };
