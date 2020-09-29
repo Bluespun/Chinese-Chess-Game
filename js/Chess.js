@@ -30,9 +30,7 @@ class Chess {
         }
     }
 
-    computeXY = num => {
-        return this.size * num;
-    }
+    computeXY = num => this.size * num
 }
 class Ma extends Chess {
     constructor(parent,fang, size, diraction) {
@@ -48,7 +46,9 @@ class Ma extends Chess {
     }
     move(x, y) {
         const { abs } = Math;
-        if (abs(x - this.x) > this.computeXY(2) || abs(y - this.y) > this.computeXY(2) || abs(x - this.x) === abs(y - this.y) || x === this.x || y === this.y)
+        const { computeXY:c } = this;
+        const disX = x - this.x, disY = y - this.y;
+        if (abs(disX) > c(2) || abs(disY) > c(2) || abs(disX) === abs(disY) || x === this.x || y === this.y)
             console.log('规则不正确');
         else{
             [this.x, this.y] = [x, y];
@@ -116,11 +116,11 @@ class Xiang extends Chess {
         this.x = zb[fang][diraction][0] * size;
         this.y = zb[fang][diraction][1] * size;
         this.chessName = this.name + fang + '-' + diraction;
-        // this.size = size;
         super.rander(parent,fang);
     }
     move(x, y) {
-        if (Math.abs(x - this.x) !== this.computeXY(2) || Math.abs(y - this.y) !== this.computeXY(2))
+        const { computeXY:c } = this;
+        if (Math.abs(x - this.x) !== c(2) || Math.abs(y - this.y) !== c(2) || this.y > c(4) && y < c(5) || this.y < c(5) && y > c(4))
             console.log('规则不正确');
         else{
             [this.x, this.y] = [x, y];

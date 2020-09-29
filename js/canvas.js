@@ -73,10 +73,8 @@ class ChessBoard {
         const activeClass = document.getElementsByClassName('active')[0];
         if(activeClass){
             const dataName = activeClass.getAttribute('data-name');
-            const yuX = x % this.size;
-            const yuY = y % this.size;
-            x = yuX <= this.size / 2 ? x - yuX : x - yuX + this.size;
-            y = yuY <= this.size / 2 ? y - yuY : y - yuY + this.size;
+            x = Math.round(x / this.size) * this.size;
+            y = Math.round(y / this.size) * this.size;
             this.chessObj[dataName].move(x,y);
         }
     }
