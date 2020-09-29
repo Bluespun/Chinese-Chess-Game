@@ -15,26 +15,24 @@
         <button class="startBtn">start</button>
         <button class="resetBtn">reStart</button>
     </div>
-    
 
     <script type="module">
-        import { ChessBoard } from './js/canvas.js'
+        import { Board } from './js/Board.js'
 
         let disabled = false;
-        const box = document.getElementsByClassName('box')[0];
-        const startBtn = document.getElementsByClassName('startBtn')[0];
-        const resetBtn = document.getElementsByClassName('resetBtn')[0];
+        const box = document.getElementsByClassName('box')[0],
+              startBtn = document.getElementsByClassName('startBtn')[0],
+              resetBtn = document.getElementsByClassName('resetBtn')[0],
 
-        const chess = new ChessBoard(box);
+              board = new Board(box);
 
-        box.onclick = chess.coordinate;
-        // box.addEventListener('click',chess.coordinate,true)
+        box.onclick = board.coordinate;
 
         let isStart = false;
 
         function startGame(){
             if(!isStart){
-                chess.start();
+                board.start();
                 isStart = true;
                 disabledState();
             }
@@ -42,9 +40,12 @@
 
         function resetGame(){
             if(isStart){
-                chess.reset();
-                isStart = false;
-                disabledState();
+                const is = confirm('确定重新开始吗?');
+                if(is){
+                    board.reset();
+                    isStart = false;
+                    disabledState();
+                }
             }
         }
 
