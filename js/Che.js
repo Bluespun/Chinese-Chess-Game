@@ -1,4 +1,5 @@
 import { Chess } from './Chess.js'
+import { isStop } from './status.js'
 
 class Che extends Chess {
     constructor(parent, fang, size, diraction) {
@@ -11,7 +12,8 @@ class Che extends Chess {
         super.rander();
     }
     move(x, y) {
-        if (this.x !== x && this.y !== y)
+        const is_stop = this.x === x && isStop(y,this.y,x,false) > 0 || this.y === y && isStop(x,this.x,y,true) > 0;
+        if (this.x !== x && this.y !== y || is_stop)
             console.log('规则不正确');
         else{
             [this.x, this.y] = [x, y];
