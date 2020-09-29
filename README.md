@@ -1,2 +1,2 @@
 # Chinese-Chess-Game
-> 项目构建中...
+> version 1.0.2 添加行棋的规则

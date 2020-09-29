@@ -59,7 +59,6 @@ function () {
     key: "start",
     value: function start() {
       var dira = ['l', 'r'];
-      var ma;
       self.chessObj = {};
 
       for (var i = 0; i < 2; i++) {
@@ -70,12 +69,16 @@ function () {
         try {
           for (var _iterator = dira[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var o = _step.value;
-            ma = new _Chess.Ma(this.parent, i, this.size, o);
-            self.chessObj[i + o] = ma;
-            new _Chess.Pao(this.parent, i, this.size, o);
-            new _Chess.Che(this.parent, i, this.size, o);
-            new _Chess.Xiang(this.parent, i, this.size, o);
-            new _Chess.Shi(this.parent, i, this.size, o);
+            var ma = new _Chess.Ma(this.parent, i, this.size, o);
+            var pao = new _Chess.Pao(this.parent, i, this.size, o);
+            var che = new _Chess.Che(this.parent, i, this.size, o);
+            var xiang = new _Chess.Xiang(this.parent, i, this.size, o);
+            var shi = new _Chess.Shi(this.parent, i, this.size, o);
+            self.chessObj[ma.chessName] = ma;
+            self.chessObj[pao.chessName] = pao;
+            self.chessObj[che.chessName] = che;
+            self.chessObj[xiang.chessName] = xiang;
+            self.chessObj[shi.chessName] = shi;
           }
         } catch (err) {
           _didIteratorError = true;
@@ -92,14 +95,14 @@ function () {
           }
         }
 
-        new _Chess.Jiang(this.parent, i, this.size);
+        var jiang = new _Chess.Jiang(this.parent, i, this.size);
+        self.chessObj[jiang.chessName] = jiang;
 
         for (var j = 0; j <= 8; j += 2) {
-          new _Chess.Bing(this.parent, i, this.size, j);
+          var bing = new _Chess.Bing(this.parent, i, this.size, j);
+          self.chessObj[bing.chessName] = bing;
         }
       }
-
-      console.log(ma);
     }
   }, {
     key: "reset",
@@ -109,17 +112,27 @@ function () {
       for (var i = childs.length - 1; i > 0; i--) {
         this.parent.removeChild(childs[i]);
       }
+
+      this.start();
     }
   }, {
     key: "coordinate",
     value: function coordinate(_ref3) {
       var x = _ref3.offsetX,
           y = _ref3.offsetY;
+      self.zuobiao(x, y);
+    }
+  }, {
+    key: "zuobiao",
+    value: function zuobiao(x, y) {
       var activeClass = document.getElementsByClassName('active')[0];
 
-      if (activeClass) {}
-
-      console.log(x, y, self.chessObj);
+      if (activeClass) {
+        var dataName = activeClass.getAttribute('data-name');
+        x = Math.round(x / this.size) * this.size;
+        y = Math.round(y / this.size) * this.size;
+        this.chessObj[dataName].move(x, y);
+      }
     }
   }, {
     key: "init",
@@ -207,8 +220,3 @@ function () {
 }();
 
 exports.ChessBoard = ChessBoard;
-
-function removeClass(className) {
-  var activeClass = document.getElementsByClassName(className)[0];
-  if (activeClass) activeClass.classList.remove(className);
-}
