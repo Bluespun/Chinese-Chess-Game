@@ -1,4 +1,5 @@
 import { Chess } from './Chess.js'
+import { ishave } from './status.js'
 
 class Ma extends Chess {
     /**
@@ -18,10 +19,14 @@ class Ma extends Chess {
         super.rander();
     }
     move(x, y) {
-        const { abs } = Math;
-        const { computeXY:c } = this;
-        const disX = x - this.x, disY = y - this.y;
-        if (abs(disX) > c(2) || abs(disY) > c(2) || abs(disX) === abs(disY) || x === this.x || y === this.y)
+        const { abs } = Math,
+              { computeXY:c } = this,
+              disX = x - this.x, disY = y - this.y,
+              //判断马腿是否憋住了
+              isBieX = disX === c(2) && ishave(x - c(1), this.y) || disX === -c(2) && ishave(x + c(1), this.y), 
+              isBieY = disY === c(2) && ishave(this.x, y - c(1)) || disY === -c(2) && ishave(this.x, y + c(1)),
+              isBie = isBieX || isBieY
+        if (abs(disX) > c(2) || abs(disY) > c(2) || abs(disX) === abs(disY) || x === this.x || y === this.y || isBie)
             console.log('规则不正确');
         else{
             [this.x, this.y] = [x, y];
@@ -29,7 +34,7 @@ class Ma extends Chess {
             this.chessEle.style.top = this.y + 8 + 'px';
             this.chessEle.classList.remove('active');
         }
-            
+        
     }
 }
 

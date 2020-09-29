@@ -5,6 +5,7 @@ import { Che } from './Che.js'
 import { Shi } from './Shi.js'
 import { Jiang } from './Jiang.js'
 import { Xiang } from './Xiang.js'
+import { chessObj } from './status.js'
 
 let self;
 class Board {
@@ -33,8 +34,6 @@ class Board {
 
     start(){
         const dira = ['l', 'r'];
-        self.chessObj = {}
-        window.chess = self.chessObj;
         for (let i = 0; i < 2; i++) {
             for (let o of dira) {
                 const ma = new Ma(this.parent,i, this.size, o),
@@ -43,24 +42,26 @@ class Board {
                       xiang = new Xiang(this.parent,i, this.size, o),
                       shi = new Shi(this.parent,i, this.size, o);
 
-                self.chessObj[ma.chessName] = ma;
-                self.chessObj[pao.chessName] = pao;
-                self.chessObj[che.chessName] = che;
-                self.chessObj[xiang.chessName] = xiang;
-                self.chessObj[shi.chessName] = shi;
+                chessObj[ma.chessName] = ma;
+                chessObj[pao.chessName] = pao;
+                chessObj[che.chessName] = che;
+                chessObj[xiang.chessName] = xiang;
+                chessObj[shi.chessName] = shi;
             }
             const jiang = new Jiang(this.parent,i, this.size);
-            self.chessObj[jiang.chessName] = jiang;
+            chessObj[jiang.chessName] = jiang;
             for (let j = 0; j <= 8; j += 2) {
                 const bing = new Bing(this.parent,i, this.size, j);
-                self.chessObj[bing.chessName] = bing;
+                chessObj[bing.chessName] = bing;
             }
         }
+
+        window.chess = chessObj;
     }
 
     reset(){
         const childs = this.parent.children;
-        for(let i = childs.length-1;i > 0;i--) this.parent.removeChild(childs[i]);
+        for(let i = childs.length - 1;i > 0;i--) this.parent.removeChild(childs[i]);
         this.start();
     }
 
@@ -74,7 +75,7 @@ class Board {
             const dataName = activeClass.getAttribute('data-name');
             x = Math.round(x / this.size) * this.size;
             y = Math.round(y / this.size) * this.size;
-            this.chessObj[dataName].move(x,y);
+            chessObj[dataName].move(x,y);
         }
     }
 
@@ -162,3 +163,6 @@ class Board {
 
 
 export { Board }
+
+
+

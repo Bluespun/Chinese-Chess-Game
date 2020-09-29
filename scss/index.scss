@@ -40,11 +40,14 @@ $item:70px;
                 height:100%;
                 border-radius:50%;
                 border:2px solid #f00;
-                // transform: scale(1.2);
-                // transition: transform .3s;
                 animation: cjb .3s forwards;
             }
+
+            &[data-fang=blue]::before{
+                border:2px solid #55f;
+            }
         }
+        
     }
 }
 

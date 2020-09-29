@@ -9,17 +9,17 @@ class Chess {
         this.isDeath = false;       //是否死亡
     }
     rander(){
-        const colors = ['#55f','#f00'];
+        const colors = ['#55f','#f00'], p = 8;
         this.chessEle = document.createElement('div');
         this.chessEle.className = 'chess-ele';
-        const p = 8;
         this.chessEle.style.width = this.width + 'px';
         this.chessEle.style.height = this.height + 'px';
         this.chessEle.style.left = this.x + p + 'px';
         this.chessEle.style.top = this.y + p + 'px';
-        this.chessEle.textContent = this.name;
         this.chessEle.style.background = colors[this.fang];
+        this.chessEle.textContent = this.name;
         this.chessEle.setAttribute('data-name',this.chessName);
+        this.chessEle.setAttribute('data-fang',this.fang ? 'red' : 'blue');
         this.chessEle.onclick = this.select;
         this.parent.appendChild(this.chessEle);
     }
@@ -31,6 +31,7 @@ class Chess {
             if(activeClass) activeClass.classList.remove('active');
             e.target.classList.add('active');
         }
+
     }
 
     sacrifice(){

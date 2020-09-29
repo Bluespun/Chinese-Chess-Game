@@ -1,4 +1,5 @@
 import { Chess } from './Chess.js'
+import { ishave } from './status.js'
 
 class Xiang extends Chess {
     constructor(parent, fang, size, diraction) {
@@ -12,8 +13,13 @@ class Xiang extends Chess {
         super.rander();
     }
     move(x, y) {
-        const { computeXY:c } = this;
-        if (Math.abs(x - this.x) !== c(2) || Math.abs(y - this.y) !== c(2) || this.y > c(4) && y < c(5) || this.y < c(5) && y > c(4))
+        const { abs } = Math,{ computeXY:c } = this,
+              disX = x - this.x, disY = y - this.y,
+              //判断象腿是否憋住了
+              isBieX = disX > 0 && disY > 0 && ishave(x - c(1), y - c(1)) || disX < 0 && disY > 0 && ishave(x + c(1), y - c(1)), 
+              isBieY = disX < 0 && disY < 0 && ishave(x + c(1), y + c(1)) || disX > 0 && disY < 0 && ishave(x - c(1), y + c(1)),
+              isBie = isBieX || isBieY;
+        if (abs(disX) !== c(2) || abs(disY) !== c(2) || this.y > c(4) && y < c(5) || this.y < c(5) && y > c(4) || isBie)
             console.log('规则不正确');
         else{
             [this.x, this.y] = [x, y];
