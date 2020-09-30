@@ -12,8 +12,8 @@ class Board {
 
     constructor (parent, color = '#333') {
         const cvs = document.createElement('canvas'),
-             { width, height } = window.getComputedStyle(parent, null),
-             [boardW, boardH] = [parseInt(width), parseInt(height)];
+            { width, height } = window.getComputedStyle(parent, null),
+            [boardW, boardH] = [parseInt(width), parseInt(height)];
 
         this.size = boardW / 8;
 
@@ -21,7 +21,7 @@ class Board {
 
         parent.appendChild(cvs);
         this.parent = parent;
-        
+
         const ctx = cvs.getContext('2d');
         ctx.strokeStyle = color;
         ctx.fillStyle = color;
@@ -29,18 +29,17 @@ class Board {
         this.ctx = ctx;
         self = this;
         this.init();
-        
     }
 
-    start(){
+    start () {
         const dira = ['l', 'r'];
         for (let i = 0; i < 2; i++) {
             for (let o of dira) {
-                const ma = new Ma(this.parent,i, this.size, o),
-                      pao = new Pao(this.parent,i, this.size, o),
-                      che = new Che(this.parent,i, this.size, o),
-                      xiang = new Xiang(this.parent,i, this.size, o),
-                      shi = new Shi(this.parent,i, this.size, o);
+                const ma = new Ma(this.parent, i, this.size, o),
+                    pao = new Pao(this.parent, i, this.size, o),
+                    che = new Che(this.parent, i, this.size, o),
+                    xiang = new Xiang(this.parent, i, this.size, o),
+                    shi = new Shi(this.parent, i, this.size, o);
 
                 chessObj[ma.chessName] = ma;
                 chessObj[pao.chessName] = pao;
@@ -48,34 +47,32 @@ class Board {
                 chessObj[xiang.chessName] = xiang;
                 chessObj[shi.chessName] = shi;
             }
-            const jiang = new Jiang(this.parent,i, this.size);
+            const jiang = new Jiang(this.parent, i, this.size);
             chessObj[jiang.chessName] = jiang;
             for (let j = 0; j <= 8; j += 2) {
-                const bing = new Bing(this.parent,i, this.size, j);
+                const bing = new Bing(this.parent, i, this.size, j);
                 chessObj[bing.chessName] = bing;
             }
         }
-
-        window.chess = chessObj;
     }
 
-    reset(){
+    reset () {
         const childs = this.parent.children;
-        for(let i = childs.length - 1;i > 0;i--) this.parent.removeChild(childs[i]);
+        for (let i = childs.length - 1; i > 0; i--) this.parent.removeChild(childs[i]);
         this.start();
     }
 
-    coordinate({offsetX:x,offsetY:y}){
-        self.zuobiao(x,y);
+    coordinate = ({ offsetX: x, offsetY: y }) => {
+        this.zuobiao(x, y);
     }
 
-    zuobiao(x,y){
-        const activeClass = document.getElementsByClassName('active')[0];
-        if(activeClass){
+    zuobiao (x, y) {
+        const activeClass = this.parent.getElementsByClassName('active')[0];
+        if (activeClass) {
             const dataName = activeClass.getAttribute('data-name');
             x = Math.round(x / this.size) * this.size;
             y = Math.round(y / this.size) * this.size;
-            chessObj[dataName].move(x,y);
+            chessObj[dataName].move(x, y);
         }
     }
 

@@ -5,7 +5,11 @@ const config = {
 
 const chessObj = {}
 
-
+/**
+ * 判断棋子行走路线是否被其他棋子阻挡只用于马和象
+ * @param {*} x 阻挡坐标x轴
+ * @param {*} y 阻挡坐标y轴
+ */
 function ishave(x, y) {
     for (let o of Object.values(chessObj)) {
         if (!o.isDeath && o.x === x && o.y === y) return true;
@@ -14,7 +18,7 @@ function ishave(x, y) {
 }
 
 /**
- * 
+ * 判断棋子行走路线是否被其他棋子阻挡只用于车和炮
  * @param {*} point 鼠标点击的坐标(与将要行走的棋子不在同一条线的值)
  * @param {*} chess 当前要走的棋子坐标(与将要行走的棋子不在同一条线的值)
  * @param {*} linePoint 鼠标和棋子在同一条线上的坐标值
