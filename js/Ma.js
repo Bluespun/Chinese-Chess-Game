@@ -1,7 +1,7 @@
 import { Chess } from './Chess.js'
 import { ishave } from './status.js'
 
-class Ma extends Chess {
+export class Ma extends Chess {
     /**
      * 
      * @param {Element} parent 需要挂载的节点
@@ -38,4 +38,3 @@ class Ma extends Chess {
     }
 }
 
-export { Ma };

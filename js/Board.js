@@ -7,8 +7,7 @@ import { Jiang } from './Jiang.js'
 import { Xiang } from './Xiang.js'
 import { chessObj } from './status.js'
 
-let self;
-class Board {
+export class Board {
 
     constructor (parent, color = '#333') {
         const cvs = document.createElement('canvas'),
@@ -27,7 +26,6 @@ class Board {
         ctx.fillStyle = color;
         ctx.strokeRect(0, 0, boardW, boardH);
         this.ctx = ctx;
-        self = this;
         this.init();
     }
 
@@ -59,7 +57,7 @@ class Board {
     reset () {
         const childs = this.parent.children;
         for (let i = childs.length - 1; i > 0; i--) this.parent.removeChild(childs[i]);
-        this.start();
+        // this.start();
     }
 
     coordinate = ({ offsetX: x, offsetY: y }) => {
@@ -159,7 +157,7 @@ class Board {
 }
 
 
-export { Board }
+
 
 
 

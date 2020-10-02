@@ -1,6 +1,7 @@
 const config = {
     color: ['#55f', '#f00'],
-    firstStart: 1,
+    firstfang: '',  //0代表我方 1代表对方
+    selectfang:''      //我方颜色配置
 }
 
 const chessObj = {}
@@ -15,6 +16,22 @@ function ishave(x, y) {
         if (!o.isDeath && o.x === x && o.y === y) return true;
     }
     return false;
+}
+
+function arrReverse(arr){
+    if(config.selectfang === 'blue') arr.push(arr.shift());
+    return arr;
+}
+
+function playTitle(){
+    const {firstfang,selectfang} = config;
+    const obj = {red:'红方行棋',blue:'蓝方行棋'};
+
+    if(~~firstfang){
+        return selectfang === 'red' ? obj.blue : obj.red;
+    }else{
+        return obj[selectfang];
+    }
 }
 
 /**
@@ -45,5 +62,5 @@ function isStop(point,chess,linePoint,isRow){
     return num;
 }
 
-export { config, chessObj, ishave, isStop }
+export { config, chessObj, ishave, isStop , arrReverse, playTitle }
 

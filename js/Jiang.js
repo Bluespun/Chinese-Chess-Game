@@ -1,10 +1,11 @@
 import { Chess } from './Chess.js'
+import { arrReverse } from './status.js'
 
-class Jiang extends Chess {
+export class Jiang extends Chess {
     constructor(parent, fang, size) {
         super(parent, fang, size);
         const arr = ['将', '帅'], zb = [[4, 0], [4, 9]];
-        this.name = arr[fang];
+        this.name = arrReverse(arr)[fang];
         this.x = zb[fang][0] * size;
         this.y = zb[fang][1] * size;
         this.chessName = this.name + fang;
@@ -26,4 +27,3 @@ class Jiang extends Chess {
     }
 }
 
-export { Jiang };

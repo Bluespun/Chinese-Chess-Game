@@ -11,9 +11,41 @@
 <body>
     <div class="box"></div>
 
-    <div class="footer">
-        <button class="startBtn">start</button>
-        <button class="resetBtn">reStart</button>
+    <div class="mianban">
+        <div class="status">行棋状态</div>
+        <div class="footer">
+            <button class="resetBtn">重来</button>
+            <button class="startBtn">准备</button>
+        </div>
+    </div>
+
+
+    <div class="mask none">
+        <div class="formbox">
+            <div class="title">配置选项</div>
+            <form action="" method="post" class="form">
+                <div class="item">
+                    <span class="h">选择归属方:</span>
+                    <div class="inputbox">
+                        <label for="red">红方</label>
+                        <input type="radio" name="selectfang" id="red" value="red" checked>
+                        <label for="blue">蓝方</label>
+                        <input type="radio" name="selectfang" id="blue" value="blue">
+                    </div>
+                </div>
+
+                <div class="item">
+                    <span class="h">选择优先方:</span>
+                    <div class="inputbox">
+                        <label for="red1">我方</label>
+                        <input type="radio" name="firstfang" id="red1" value="0" checked>
+                        <label for="blue1">敌方</label>
+                        <input type="radio" name="firstfang" id="blue1" value="1">
+                    </div>
+                </div>
+            </form>
+            <button class="confirmBtn">确定</button>
+        </div>
     </div>
 
     <script type="module" src="js/index.js"></script>

@@ -4,7 +4,7 @@ $item:70px;
     width: 8*$item;
     height:9*$item;
     padding:8px;
-    margin:30px auto;
+    margin:$item auto;
     position:relative;
     .chess-ele{
         position:absolute;
@@ -64,26 +64,7 @@ $item:70px;
     }
 }
 
-.footer{
-    display:flex;
-    justify-content: center;
-    .startBtn,.resetBtn{
-        padding:8px 18px;
-        border-radius:30px;
-        outline:none;
-        margin:0 20px;
-    }
-    .startBtn{
-        background:#46f;
-        color:#fff;
-        border:1px solid #46f;
-    }
-    .resetBtn{
-        background:none;
-        border:1px solid #999;
-    }
 
-}
 
 .mask{
     position:fixed;
@@ -95,12 +76,42 @@ $item:70px;
     display:flex;
     justify-content:center;
     align-items:center;
+    &.none{
+        display:none;
+    }
     .formbox{
         width:33%;
         background:#fff;
         border-radius:10px;
         padding:0 20px;
         animation: cjb .3s forwards;
+        .title{
+            padding:14px 0;
+
+        }
+
+        .form{
+            font-size:14px;
+            margin:0 auto;
+            .item{
+                margin:10px 0;
+                .h{
+                    color:#999;
+                    margin-right:20px;
+                }
+
+                display:flex;
+                .inputbox{
+                    display:flex;
+                    align-items:center;
+                    input{
+                        margin-right:20px;
+                    }
+
+                }
+
+            }
+        }
         .confirmBtn{
             padding:8px 18px;
             background:#55f;
@@ -110,5 +121,43 @@ $item:70px;
             border:none;
             outline:none;
         }
+    }
+}
+
+.mianban{
+    width:200px;
+    height:200px;
+    border-radius:10px;
+    border:2px solid #ccc;
+    position:fixed;
+    left:20px;
+    top:100px;
+    .status{
+        text-align:center;
+        padding:14px;
+        font-size:16px;
+        font-weight:bold;
+        color:#666;
+    }
+
+    .footer{
+        display:flex;
+        justify-content: center;
+        .startBtn,.resetBtn{
+            padding:8px 14px;
+            border-radius:30px;
+            outline:none;
+            margin:0 20px;
+        }
+        .startBtn{
+            background:#46f;
+            color:#fff;
+            border:1px solid #46f;
+        }
+        .resetBtn{
+            background:none;
+            border:1px solid #999;
+        }
+    
     }
 }

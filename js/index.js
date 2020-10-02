@@ -1,21 +1,49 @@
 import { Board } from './Board.js'
-import { gameConfig } from './views.js'
+import { config, playTitle } from './status.js'
 
-const box = document.getElementsByClassName('box')[0],
-        startBtn = document.getElementsByClassName('startBtn')[0],
-        resetBtn = document.getElementsByClassName('resetBtn')[0],
+const getClass = document.getElementsByClassName.bind(document),
+        box = getClass('box')[0],
+        startBtn = getClass('startBtn')[0],
+        resetBtn = getClass('resetBtn')[0],
+        confirmBtn = getClass('confirmBtn')[0],
+        mask = getClass('mask')[0],
+        statusTitle = getClass('status')[0],
+
+        selectFang = document.getElementsByName('selectfang'),
+        firstFang = document.getElementsByName('firstfang'),
 
         board = new Board(box);
 
-box.onclick = board.coordinate;
+box.onclick = board.coordinate;   //点击棋盘获取坐标
+confirmBtn.onclick = startGame;     //开始游戏
+
+
 
 let isStart = false;
 
+nodesClick(selectFang);
+nodesClick(firstFang);
+
+function nodesClick(node){
+    for(let i = 0;i < node.length;i++){
+        node[i].onclick = function(){
+            config[this.name] = this.value;
+        }
+        if(node[i].checked){
+            const name = node[i].name;
+            config[name] = node[i].value;
+        }
+    }
+
+}
+
 function startGame(){
     if(!isStart){
-        gameConfig(board.start.bind(board));
+        board.start();
         isStart = true;
+        statusTitle.textContent = playTitle();
         disabledState();
+        mask.classList.add('none');
     }
 }
 
@@ -35,6 +63,6 @@ function disabledState(){
     resetBtn.disabled = !isStart;
 }
 
-startBtn.onclick = startGame;
+startBtn.onclick = () => mask.classList.remove('none');
 disabledState();
 resetBtn.onclick = resetGame;

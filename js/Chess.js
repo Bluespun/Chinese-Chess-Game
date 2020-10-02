@@ -1,4 +1,5 @@
-class Chess {
+import { arrReverse } from './status.js'
+export class Chess {
     constructor (parent, fang, size) {
         const lunc = 50;            //棋子的宽高
         this.width = lunc;
@@ -10,16 +11,17 @@ class Chess {
     }
     rander () {
         const colors = ['#55f', '#f00'], p = 8;
+        // if(config.selectfang === 'blue') colors.push(colors.shift());
         this.chessEle = document.createElement('div');
         this.chessEle.className = 'chess-ele';
         this.chessEle.style.width = this.width + 'px';
         this.chessEle.style.height = this.height + 'px';
         this.chessEle.style.left = this.x + p + 'px';
         this.chessEle.style.top = this.y + p + 'px';
-        this.chessEle.style.background = colors[this.fang];
+        this.chessEle.style.background = arrReverse(colors)[this.fang];
         this.chessEle.textContent = this.name;
         this.chessEle.setAttribute('data-name', this.chessName);
-        this.chessEle.setAttribute('data-fang', this.fang ? 'red' : 'blue');
+        this.chessEle.setAttribute('data-fang', arrReverse(['blue','red'])[this.fang]);
         this.chessEle.onclick = this.select;
         this.parent.appendChild(this.chessEle);
     }
@@ -42,4 +44,4 @@ class Chess {
     computeXY = num => this.size * num
 }
 
-export { Chess };
+

@@ -1,10 +1,11 @@
 import { Chess } from './Chess.js'
+import { arrReverse } from './status.js'
 
-class Bing extends Chess {
+export class Bing extends Chess {
     constructor(parent, fang, size, x) {
         super(parent, fang, size);
         const arr = ['卒', '兵'];
-        this.name = arr[fang];
+        this.name = arrReverse(arr)[fang];
         const zb = [3, 6];
         this.x = x * size;
         this.y = zb[fang] * size;
@@ -26,4 +27,3 @@ class Bing extends Chess {
     }
 }
 
-export { Bing };

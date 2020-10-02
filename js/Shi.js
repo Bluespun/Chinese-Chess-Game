@@ -1,6 +1,6 @@
 import { Chess } from './Chess.js'
 
-class Shi extends Chess {
+export class Shi extends Chess {
     constructor(parent, fang, size, diraction) {
         super(parent, fang, size);
         const arr = ['士','仕'];
@@ -26,4 +26,3 @@ class Shi extends Chess {
     }
 }
 
-export { Shi };

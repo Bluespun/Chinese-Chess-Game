@@ -1,7 +1,7 @@
 import { Chess } from './Chess.js'
 import { isStop } from './status.js'
 
-class Pao extends Chess {
+export class Pao extends Chess {
     constructor (parent, fang, size, diraction) {
         super(parent, fang, size);
         this.name = '炮';
@@ -24,4 +24,3 @@ class Pao extends Chess {
     }
 }
 
-export { Pao };
