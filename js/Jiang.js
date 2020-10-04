@@ -18,6 +18,7 @@ export class Jiang extends Chess {
         if (disX > c(1) || disY > c(1) || disX === disY || (x < c(3) || x > c(5)) || y > c(2) && y < c(7))
             console.log('规则不正确');
         else{
+            super.move();
             [this.x, this.y] = [x, y];
             this.chessEle.style.left = this.x + 8 + 'px';
             this.chessEle.style.top = this.y + 8 + 'px';

@@ -29,6 +29,7 @@ export class Ma extends Chess {
         if (abs(disX) > c(2) || abs(disY) > c(2) || abs(disX) === abs(disY) || x === this.x || y === this.y || isBie)
             console.log('规则不正确');
         else{
+            super.move();
             [this.x, this.y] = [x, y];
             this.chessEle.style.left = this.x + 8 + 'px';
             this.chessEle.style.top = this.y + 8 + 'px';

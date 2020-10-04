@@ -23,6 +23,7 @@ export class Xiang extends Chess {
         if (abs(disX) !== c(2) || abs(disY) !== c(2) || this.y > c(4) && y < c(5) || this.y < c(5) && y > c(4) || isBie)
             console.log('规则不正确');
         else{
+            super.move();
             [this.x, this.y] = [x, y];
             this.chessEle.style.left = this.x + 8 + 'px';
             this.chessEle.style.top = this.y + 8 + 'px';
