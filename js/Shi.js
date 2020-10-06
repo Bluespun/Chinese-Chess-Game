@@ -1,5 +1,5 @@
 import { Chess } from './Chess.js'
-import { arrReverse } from './status.js'
+import { arrReverse, config } from './status.js'
 
 export class Shi extends Chess {
     constructor(parent, fang, size, diraction) {
@@ -19,11 +19,8 @@ export class Shi extends Chess {
         if (disX !== c(1) || disY !== c(1) || (x < c(3) || x > c(5)) || y > c(2) && y < c(7))
             console.log('规则不正确');
         else{
-            super.move();
-            [this.x, this.y] = [x, y];
-            this.chessEle.style.left = this.x + 8 + 'px';
-            this.chessEle.style.top = this.y + 8 + 'px';
-            this.chessEle.classList.remove('active');
+            if(super.isEat(x,y)) config.beEatObj.sacrifice();
+            super.move(x,y);
         }
     }
 }

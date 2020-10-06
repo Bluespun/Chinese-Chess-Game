@@ -1,6 +1,6 @@
-import { arrReverse, config } from './status.js'
+import { arrReverse, config, chessObj, setTime } from './status.js'
 export class Chess {
-    constructor(parent, fang, size) {
+    constructor (parent, fang, size) {
         const lunc = 50;            //棋子的宽高
         this.width = lunc;
         this.height = lunc;
@@ -9,7 +9,7 @@ export class Chess {
         this.parent = parent;      //父级元素
         this.isDeath = false;       //是否死亡
     }
-    rander() {
+    rander () {
         const colors = ['#55f', '#f00'], p = 8;
         this.chessEle = document.createElement('div');
         this.chessEle.className = 'chess-ele';
@@ -28,26 +28,48 @@ export class Chess {
     select = e => {
         e.stopPropagation();
         const activeClass = this.parent.getElementsByClassName('active')[0],
-        target = e.target;
-        if(target.getAttribute('data-fang') === config.selectfang){
+            target = e.target;
+        if (target.getAttribute('data-fang') === config.selectfang) {
             if (!target.classList.contains('active')) {
                 if (activeClass) activeClass.classList.remove('active');
                 target.classList.add('active');
+            }
+        } else {
+            const dataName = target.getAttribute('data-name');
+            const { x, y } = chessObj[dataName];
+            if (activeClass) {
+                const activeDataName = activeClass.getAttribute('data-name');
+                config.beEatObj = chessObj[dataName];
+                chessObj[activeDataName].move(x, y);
             }
         }
 
     }
 
-    sacrifice() {
+    sacrifice () {
         this.isDeath = true;
-        this.chessEle.style.display = 'none';
+        setTime(() => this.chessEle.style.display = 'none');
     }
 
-    move(){
+    move (x, y) {
         config.selectfang = config.selectfang === 'red' ? 'blue' : 'red';
+        [this.x, this.y] = [x, y];
+        this.chessEle.style.left = this.x + 8 + 'px';
+        this.chessEle.style.top = this.y + 8 + 'px';
+        this.chessEle.classList.remove('active');
+
     }
 
     computeXY = num => this.size * num
+
+    isEat (x, y) {
+        for (let v of Object.values(chessObj)) {
+            if (!v.isDeath && v.x === x && v.y === y) return true;
+        }
+        return false;
+    }
 }
+
+
 
 

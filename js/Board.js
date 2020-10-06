@@ -9,7 +9,7 @@ import { chessObj } from './status.js'
 
 export class Board {
 
-    constructor(parent, color = '#333') {
+    constructor (parent, color = '#333') {
         const cvs = document.createElement('canvas'),
             { width, height } = window.getComputedStyle(parent, null),
             [boardW, boardH] = [parseInt(width), parseInt(height)];
@@ -29,7 +29,7 @@ export class Board {
         this.init();
     }
 
-    start() {
+    start () {
         const dira = ['l', 'r'];
         for (let i = 0; i < 2; i++) {
             for (let o of dira) {
@@ -54,17 +54,12 @@ export class Board {
         }
     }
 
-    reset() {
+    reset () {
         const childs = this.parent.children;
         for (let i = childs.length - 1; i > 0; i--) this.parent.removeChild(childs[i]);
     }
 
     coordinate = ({ offsetX: x, offsetY: y }) => {
-        console.log(x,y);
-        this.zuobiao(x, y);
-    }
-
-    zuobiao(x, y) {
         const activeClass = this.parent.getElementsByClassName('active')[0];
         if (activeClass) {
             const dataName = activeClass.getAttribute('data-name');
@@ -74,7 +69,17 @@ export class Board {
         }
     }
 
-    init() {
+    zuobiao (x, y) {
+        const activeClass = this.parent.getElementsByClassName('active')[0];
+        if (activeClass) {
+            const dataName = activeClass.getAttribute('data-name');
+            x = Math.round(x / this.size) * this.size;
+            y = Math.round(y / this.size) * this.size;
+            chessObj[dataName].move(x, y);
+        }
+    }
+
+    init () {
         for (let i = 1; i < 8; i++) {
             this.column(0, 4, i);
             this.column(5, 9, i);
@@ -85,7 +90,7 @@ export class Board {
         this.chaLine(3, 0);
         this.chaLine(3, 7);
 
-        this.ctx.font = `${this.size / 70 * 30}px PingFangSC-Medium`;
+        this.ctx.font = `${ this.size / 70 * 30 }px PingFangSC-Medium`;
         this.ctx.fillText('楚河', this.size * 1.1, this.size * 4.65);
         this.ctx.fillText('汉界', this.size * 6.1, this.size * 4.65);
 
@@ -105,21 +110,21 @@ export class Board {
         }
     }
 
-    column(start, end, i) {
+    column (start, end, i) {
         this.ctx.beginPath();
         this.ctx.moveTo(i * this.size, start * this.size);
         this.ctx.lineTo(i * this.size, end * this.size);
         this.ctx.stroke();
     }
 
-    rows(start, end, i) {
+    rows (start, end, i) {
         this.ctx.beginPath();
         this.ctx.moveTo(start * this.size, i * this.size);
         this.ctx.lineTo(end * this.size, i * this.size);
         this.ctx.stroke();
     }
 
-    chaLine(x, y) {
+    chaLine (x, y) {
         this.ctx.beginPath();
         this.ctx.moveTo(x * this.size, y * this.size);
         this.ctx.lineTo((x + 2) * this.size, (y + 2) * this.size);
@@ -128,7 +133,7 @@ export class Board {
         this.ctx.stroke();
     }
 
-    jiaoyin(x, y) {
+    jiaoyin (x, y) {
         const [s, b] = [.1, .3];
         this.ctx.beginPath();
         this.ctx.moveTo((x - s) * this.size, (y - b) * this.size);

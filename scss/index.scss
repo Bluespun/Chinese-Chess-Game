@@ -29,7 +29,7 @@ $item:70px;
         }
         cursor:pointer;
         &.active{
-            
+            z-index:12;
             &::before{
                 position:absolute;
                 content:"";

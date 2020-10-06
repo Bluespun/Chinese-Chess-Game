@@ -1,5 +1,5 @@
 import { Chess } from './Chess.js'
-import { isStop } from './status.js'
+import { isStop, config } from './status.js'
 
 export class Che extends Chess {
     constructor(parent, fang, size, diraction) {
@@ -16,11 +16,8 @@ export class Che extends Chess {
         if (this.x !== x && this.y !== y || is_stop)
             console.log('规则不正确');
         else{
-            super.move();
-            [this.x, this.y] = [x, y];
-            this.chessEle.style.left = this.x + 8 + 'px';
-            this.chessEle.style.top = this.y + 8 + 'px';
-            this.chessEle.classList.remove('active');
+            if(super.isEat(x,y)) config.beEatObj.sacrifice();
+            super.move(x,y);
         }
     }
 }
