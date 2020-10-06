@@ -29,7 +29,6 @@ $item:70px;
         }
         cursor:pointer;
         &.active{
-            z-index:12;
             &::before{
                 position:absolute;
                 content:"";
@@ -44,6 +43,10 @@ $item:70px;
             &[data-fang=blue]::before{
                 border:2px solid #55f;
             }
+        }
+
+        &.zindex{
+            z-index:12;
         }
         
     }

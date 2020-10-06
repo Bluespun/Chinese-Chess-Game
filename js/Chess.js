@@ -31,8 +31,8 @@ export class Chess {
             target = e.target;
         if (target.getAttribute('data-fang') === config.selectfang) {
             if (!target.classList.contains('active')) {
-                if (activeClass) activeClass.classList.remove('active');
-                target.classList.add('active');
+                if (activeClass) activeClass.classList.remove('active', 'zindex');
+                target.classList.add('active', 'zindex');
             }
         } else {
             const dataName = target.getAttribute('data-name');
@@ -57,6 +57,7 @@ export class Chess {
         this.chessEle.style.left = this.x + 8 + 'px';
         this.chessEle.style.top = this.y + 8 + 'px';
         this.chessEle.classList.remove('active');
+        setTime(() => this.chessEle.classList.remove('zindex'));
 
     }
 
