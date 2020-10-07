@@ -14,18 +14,15 @@ export class Pao extends Chess {
     move (x, y) {
         const is_stop = this.x === x && isStop(y, this.y, x, false) > 0 || this.y === y && isStop(x, this.x, y, true) > 0;
         const is_stop_eat = this.x === x && isStop(y, this.y, x, false) === 1 || this.y === y && isStop(x, this.x, y, true) === 1;
-
-        if (super.isEat(x, y)) {
-            if (this.x !== x && this.y !== y || is_stop_eat) {
+        const notXY = this.x !== x && this.y !== y;
+        if (this.isEat(x, y)) {
+            if(notXY || is_stop_eat){
                 super.move(x, y);
                 config.beEatObj.sacrifice();
             }
         } else {
-            if (this.x !== x && this.y !== y || is_stop)
-                console.log('规则不正确');
-            else {
-                super.move(x, y);
-            }
+            if (notXY || is_stop) console.log('规则不正确');
+            else super.move(x, y);
         }
     }
 

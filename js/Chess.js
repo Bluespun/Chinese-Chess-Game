@@ -1,7 +1,7 @@
 import { arrReverse, config, chessObj, setTime } from './status.js'
 export class Chess {
     constructor (parent, fang, size) {
-        const lunc = 50;            //棋子的宽高
+        const lunc = 60;            //棋子的宽高
         this.width = lunc;
         this.height = lunc;
         this.size = size;
@@ -17,6 +17,8 @@ export class Chess {
         this.chessEle.style.height = this.height + 'px';
         this.chessEle.style.left = this.x + p + 'px';
         this.chessEle.style.top = this.y + p + 'px';
+        this.chessEle.style.marginLeft = -this.width / 2 + 'px';
+        this.chessEle.style.marginTop = -this.width / 2 + 'px';
         this.chessEle.style.background = arrReverse(colors)[this.fang];
         this.chessEle.textContent = this.name;
         this.chessEle.setAttribute('data-name', this.chessName);
@@ -69,6 +71,8 @@ export class Chess {
         }
         return false;
     }
+
+    
 }
 
 

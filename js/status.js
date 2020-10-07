@@ -16,7 +16,7 @@ let config = new Proxy(conf, {
     }
 })
 
-const chessObj = {}
+const chessObj = {}     //用于存放实例对象
 
 /**
  * 判断棋子行走路线是否被其他棋子阻挡只用于马和象
