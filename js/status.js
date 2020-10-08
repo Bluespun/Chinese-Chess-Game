@@ -3,12 +3,13 @@ let conf = {
     firstfang: '',  //0代表我方 1代表对方
     selectfang: '',      //我方颜色配置
     statusTitle: document.getElementsByClassName('status')[0],
-    beEatObj:null
+    beEatObj:null,
+    playing:''          //当前属于哪方下棋
 }
 
 let config = new Proxy(conf, {
     set (target, prop, val) {
-        if (prop === 'selectfang') toggleStatus();
+        if (prop === 'playing') toggleStatus();
         return Reflect.set(target, prop, val);
     },
     get (target, prop) {
@@ -41,17 +42,19 @@ function playTitle () {
     let status = '';
 
     if (+firstfang) {
-        toggleStatus();
+        config.playing = selectfang === 'red' ? 'blue' : 'red';
     } else {
         status = obj[selectfang];
+        config.playing = selectfang;
+        statusTitle.textContent = status;
     }
-    statusTitle.textContent = status;
 }
 
 function toggleStatus () {
-    let { selectfang, statusTitle } = config;
-    statusTitle.textContent = selectfang === 'red' ? '蓝方行棋' : '红方行棋';
+    let { statusTitle } = config;
+    statusTitle.textContent = config.playing === 'red' ? '蓝方行棋' : '红方行棋';
 }
+
 
 /**
  * 判断棋子行走路线是否被其他棋子阻挡只用于车和炮

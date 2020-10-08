@@ -57,6 +57,7 @@ export class Board {
     reset () {
         const childs = this.parent.children;
         for (let i = childs.length - 1; i > 0; i--) this.parent.removeChild(childs[i]);
+        for(let k in chessObj) delete chessObj[k];
     }
 
     coordinate = ({ offsetX: x, offsetY: y }) => {

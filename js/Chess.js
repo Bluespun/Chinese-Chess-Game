@@ -31,7 +31,7 @@ export class Chess {
         e.stopPropagation();
         const activeClass = this.parent.getElementsByClassName('active')[0],
             target = e.target;
-        if (target.getAttribute('data-fang') === config.selectfang) {
+        if (target.getAttribute('data-fang') === config.playing) {
             if (!target.classList.contains('active')) {
                 if (activeClass) activeClass.classList.remove('active', 'zindex');
                 target.classList.add('active', 'zindex');
@@ -54,13 +54,15 @@ export class Chess {
     }
 
     move (x, y) {
-        config.selectfang = config.selectfang === 'red' ? 'blue' : 'red';
+        config.playing = config.playing === 'red' ? 'blue' : 'red';
         [this.x, this.y] = [x, y];
         this.chessEle.style.left = this.x + 8 + 'px';
         this.chessEle.style.top = this.y + 8 + 'px';
         this.chessEle.classList.remove('active');
-        setTime(() => this.chessEle.classList.remove('zindex'));
-        if(isOver()) console.log('游戏结束');
+        setTime(() => {
+            this.chessEle.classList.remove('zindex')
+            if(isOver()) alert('游戏结束');
+        });
 
     }
 
