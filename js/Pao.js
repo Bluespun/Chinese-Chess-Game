@@ -16,9 +16,9 @@ export class Pao extends Chess {
         const is_stop_eat = this.x === x && isStop(y, this.y, x, false) === 1 || this.y === y && isStop(x, this.x, y, true) === 1;
         const notXY = this.x !== x && this.y !== y;
         if (this.isEat(x, y)) {
-            if(notXY || is_stop_eat){
-                super.move(x, y);
+            if(!notXY && is_stop_eat){
                 config.beEatObj.sacrifice();
+                super.move(x, y);
             }
         } else {
             if (notXY || is_stop) console.log('规则不正确');

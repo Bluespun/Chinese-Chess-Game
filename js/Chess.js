@@ -1,4 +1,4 @@
-import { arrReverse, config, chessObj, setTime } from './status.js'
+import { arrReverse, config, chessObj, setTime, isOver } from './status.js'
 export class Chess {
     constructor (parent, fang, size) {
         const lunc = 60;            //棋子的宽高
@@ -60,6 +60,7 @@ export class Chess {
         this.chessEle.style.top = this.y + 8 + 'px';
         this.chessEle.classList.remove('active');
         setTime(() => this.chessEle.classList.remove('zindex'));
+        if(isOver()) console.log('游戏结束');
 
     }
 

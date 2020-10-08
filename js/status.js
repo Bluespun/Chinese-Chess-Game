@@ -88,5 +88,19 @@ function setTime (fn,t = 300) {
     }, t);
 }
 
-export { config, chessObj, ishave, isStop, arrReverse, playTitle, setTime }
+
+function isJiang(x, y){   //判断该棋子是不是将军
+    for(let o of Object.values(chessObj)){
+        if(o.x === x && o.y === y && ['将','帅'].includes(o.name)) return true;
+    }
+    return false;
+}
+
+function isOver(){
+    for(let o of Object.values(chessObj)){
+        if(['将','帅'].includes(o.name) && o.isDeath) return true;
+    }
+}
+
+export { config, chessObj, ishave, isStop, arrReverse, playTitle, setTime, isJiang, isOver }
 
