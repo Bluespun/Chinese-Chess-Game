@@ -105,5 +105,7 @@ function isOver(){
     }
 }
 
+
+
 export { config, chessObj, ishave, isStop, arrReverse, playTitle, setTime, isJiang, isOver }
 

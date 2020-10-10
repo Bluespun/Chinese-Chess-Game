@@ -66,3 +66,6 @@ function disabledState() {
 startBtn.onclick = () => mask.classList.remove('none');
 disabledState();
 resetBtn.onclick = resetGame;
+
+
+
